@@ -126,6 +126,6 @@ public class CuisineTest extends AbstractTest {
 //                .prettyPeek()
                 .then()
                 .statusCode(200)
-                .body(matchesJsonSchemaInClasspath("schemaCuisine.json"));
+                .body(matchesJsonSchemaInClasspath("src/test/resources/schemaCuisine.json"));
     }
 }

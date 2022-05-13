@@ -25,7 +25,7 @@ public abstract class AbstractTest {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 
-    static Integer getSize(JsonPath response) {
+    static Integer getMaxIndex(JsonPath response) {
         return new ArrayList<>(response.get("results")).size() - 1;
     }
 

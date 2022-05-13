@@ -28,11 +28,11 @@ public class AddToShoppingListTest extends AbstractTest {
                         + " \"aisle\": \"Baking\",\n"
                         + " \"parse\": true\n"
                         + "}")
-                .log()
-                .all()
+//                .log()
+//                .all()
                 .when()
                 .post(getURL() + "/mealplanner/" + getUserName() + "/shopping-list/items")
-                .prettyPeek()
+//                .prettyPeek()
                 .then()
                 .statusCode(200)
                 .extract()

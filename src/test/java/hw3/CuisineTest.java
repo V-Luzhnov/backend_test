@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Backend Java. Homework 3
@@ -21,15 +24,15 @@ public class CuisineTest extends AbstractTest {
 
     @Test
     @Tag("Positive")
-    @DisplayName("GET. Recipe search query")
-    void getRecipeSearchQueryTest() throws IOException {
+    @DisplayName("POST. Classify Cuisine (American)")
+    void postClassifyCuisineAmericanTest() throws IOException {
         JsonPath response = given()
                 .queryParam("apiKey", getApiKey())
-                .queryParam("query", "burger")
+                .queryParam("title", "The Blarney Burger")
 //                .log()
 //                .all()
                 .when()
-                .get(getURL() + "/recipes/complexSearch")
+                .post(getURL() + "/recipes/cuisine")
 //                .prettyPeek()
                 .then()
                 .statusCode(200)
@@ -37,24 +40,22 @@ public class CuisineTest extends AbstractTest {
                 .body()
                 .jsonPath();
 
-        int size = getSize(response);
-        while (size >= 0) {
-            assertThat(response.get("results[" + size + "].title").toString().contains("Burger"), is(true));
-            size --;
-        }
+        assertThat(response.get(), hasEntry("cuisine", "American"));
+        assertThat(response.get("cuisine"), equalToIgnoringCase("american"));
+        assertThat(response.get("cuisines"), hasItem("American"));
     }
 
     @Test
     @Tag("Positive")
-    @DisplayName("GET. Search query unique recipe")
-    void getSearchQueryUniqueRecipeTest() throws IOException {
+    @DisplayName("POST. Classify Cuisine (Mediterranean)")
+    void postClassifyCuisineMediterraneanTest() throws IOException {
         JsonPath response = given()
                 .queryParam("apiKey", getApiKey())
-                .queryParam("query", "$50,000 Burger")
+                .queryParam("title", "Pizza")
 //                .log()
 //                .all()
                 .when()
-                .get(getURL() + "/recipes/complexSearch")
+                .post(getURL() + "/recipes/cuisine")
 //                .prettyPeek()
                 .then()
                 .statusCode(200)
@@ -62,10 +63,69 @@ public class CuisineTest extends AbstractTest {
                 .body()
                 .jsonPath();
 
-        int size = getSize(response);
-        while (size >= 0) {
-            assertThat(response.get("results[" + size + "].title"), is("$50,000 Burger"));
-            size --;
-        }
+        assertThat(response.get(), hasEntry("cuisine", "Mediterranean"));
+        assertThat(response.get("cuisine"), equalToIgnoringCase("mediterranean"));
+        assertThat(response.get("cuisines"), hasItem("Mediterranean"));
+    }
+
+    @Test
+    @Tag("Positive")
+    @DisplayName("POST. Classify Cuisine - Confidence not null")
+    void postClassifyCuisineConfidenceNotNullTest() throws IOException {
+        JsonPath response = given()
+                .queryParam("apiKey", getApiKey())
+                .queryParam("title", "The Blarney Burger")
+//                .log()
+//                .all()
+                .when()
+                .post(getURL() + "/recipes/cuisine")
+//                .prettyPeek()
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .jsonPath();
+
+        assertThat(response.get(), hasKey("confidence"));
+        assertThat(response.get("confidence"), not(equalTo(0f)));
+    }
+
+    @Test
+    @Tag("Positive")
+    @DisplayName("POST. Classify Cuisine - Cuisines type")
+    void postClassifyCuisineCuisinesTypeTest() throws IOException {
+        JsonPath response = given()
+                .queryParam("apiKey", getApiKey())
+                .queryParam("title", "The Blarney Burger")
+//                .log()
+//                .all()
+                .when()
+                .post(getURL() + "/recipes/cuisine")
+//                .prettyPeek()
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .jsonPath();
+
+        assertThat(response.get(), hasKey("cuisines"));
+        assertThat(response.get("cuisines") instanceof ArrayList, is(true));
+    }
+
+    @Test
+    @Tag("Positive")
+    @DisplayName("POST. Classify Cuisine -  Schema is valid")
+    void postClassifyCuisineSchemaIsValidTest() throws IOException {
+        given()
+                .queryParam("apiKey", getApiKey())
+                .queryParam("title", "The Blarney Burger")
+//                .log()
+//                .all()
+                .when()
+                .post(getURL() + "/recipes/cuisine")
+//                .prettyPeek()
+                .then()
+                .statusCode(200)
+                .body(matchesJsonSchemaInClasspath("schemaCuisine.json"));
     }
 }

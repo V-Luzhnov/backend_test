@@ -41,7 +41,7 @@ public class ComplexSearchTest extends AbstractTest {
         int index = getMaxIndex(response);
         while (index >= 0) {
             assertThat(response.get("results[" + index + "].title"), containsString("Burger"));
-            index --;
+            index--;
         }
     }
 
@@ -66,7 +66,7 @@ public class ComplexSearchTest extends AbstractTest {
         int index = getMaxIndex(response);
         while (index >= 0) {
             assertThat(response.get("results[" + index + "].title"), equalToIgnoringCase("$50,000 Burger"));
-            index --;
+            index--;
         }
     }
 
@@ -92,7 +92,7 @@ public class ComplexSearchTest extends AbstractTest {
         int index = getMaxIndex(response);
         while (index >= 0) {
             assertThat(response.get("results[" + index + "].readyInMinutes"), lessThanOrEqualTo(5));
-            index --;
+            index--;
         }
     }
 

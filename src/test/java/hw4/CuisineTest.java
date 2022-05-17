@@ -1,4 +1,4 @@
-package hw3;
+package hw4;
 
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +15,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 /**
- * Backend Java. Homework 3
+ * Backend Java. Homework 4
  *
  * @author Vitalii Luzhnov
- * @version 12.05.2022
+ * @version 17.05.2022
  */
 public class CuisineTest extends AbstractTest {
 
@@ -29,13 +29,10 @@ public class CuisineTest extends AbstractTest {
         JsonPath response = given()
                 .queryParam("apiKey", getApiKey())
                 .queryParam("title", "The Blarney Burger")
-//                .log()
-//                .all()
                 .when()
                 .post(getURL() + "/recipes/cuisine")
-//                .prettyPeek()
                 .then()
-                .statusCode(200)
+                .spec(responseSpecification)
                 .extract()
                 .body()
                 .jsonPath();
@@ -52,13 +49,10 @@ public class CuisineTest extends AbstractTest {
         JsonPath response = given()
                 .queryParam("apiKey", getApiKey())
                 .queryParam("title", "Pizza")
-//                .log()
-//                .all()
                 .when()
                 .post(getURL() + "/recipes/cuisine")
-//                .prettyPeek()
                 .then()
-                .statusCode(200)
+                .spec(responseSpecification)
                 .extract()
                 .body()
                 .jsonPath();
@@ -75,13 +69,10 @@ public class CuisineTest extends AbstractTest {
         JsonPath response = given()
                 .queryParam("apiKey", getApiKey())
                 .queryParam("title", "The Blarney Burger")
-//                .log()
-//                .all()
                 .when()
                 .post(getURL() + "/recipes/cuisine")
-//                .prettyPeek()
                 .then()
-                .statusCode(200)
+                .spec(responseSpecification)
                 .extract()
                 .body()
                 .jsonPath();
@@ -97,13 +88,10 @@ public class CuisineTest extends AbstractTest {
         JsonPath response = given()
                 .queryParam("apiKey", getApiKey())
                 .queryParam("title", "The Blarney Burger")
-//                .log()
-//                .all()
                 .when()
                 .post(getURL() + "/recipes/cuisine")
-//                .prettyPeek()
                 .then()
-                .statusCode(200)
+                .spec(responseSpecification)
                 .extract()
                 .body()
                 .jsonPath();
@@ -119,13 +107,10 @@ public class CuisineTest extends AbstractTest {
         given()
                 .queryParam("apiKey", getApiKey())
                 .queryParam("title", "The Blarney Burger")
-//                .log()
-//                .all()
                 .when()
                 .post(getURL() + "/recipes/cuisine")
-//                .prettyPeek()
                 .then()
-                .statusCode(200)
+                .spec(responseSpecification)
                 .body(matchesJsonSchemaInClasspath("schemaCuisine.json"));
     }
 }

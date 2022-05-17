@@ -1,6 +1,6 @@
 package hw4;
 
-import io.restassured.path.json.JsonPath;
+import hw4.dto.response.ComplexSearchResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class ComplexSearchTest extends AbstractTest {
     @Tag("Positive")
     @DisplayName("GET. Recipe search query")
     void getRecipeSearchQueryTest() throws IOException {
-        JsonPath response = given()
+        ComplexSearchResponse response = given()
                 .spec(requestSpecification)
                 .queryParam("query", "burger")
                 .when()
@@ -33,12 +33,10 @@ public class ComplexSearchTest extends AbstractTest {
                 .spec(responseSpecification)
                 .extract()
                 .body()
-                .jsonPath();
+                .as(ComplexSearchResponse.class);
 
-        int index = getMaxIndex(response);
-        while (index >= 0) {
-            assertThat(response.get("results[" + index + "].title"), containsString("Burger"));
-            index--;
+        for (ComplexSearchResponse.Result str : response.getResults()) {
+            assertThat(str.getTitle(), containsString("Burger"));
         }
     }
 
@@ -46,7 +44,7 @@ public class ComplexSearchTest extends AbstractTest {
     @Tag("Positive")
     @DisplayName("GET. Search query unique recipe")
     void getSearchQueryUniqueRecipeTest() throws IOException {
-        JsonPath response = given()
+        ComplexSearchResponse response = given()
                 .spec(requestSpecification)
                 .queryParam("query", "$50,000 Burger")
                 .when()
@@ -55,12 +53,10 @@ public class ComplexSearchTest extends AbstractTest {
                 .spec(responseSpecification)
                 .extract()
                 .body()
-                .jsonPath();
+                .as(ComplexSearchResponse.class);
 
-        int index = getMaxIndex(response);
-        while (index >= 0) {
-            assertThat(response.get("results[" + index + "].title"), equalToIgnoringCase("$50,000 Burger"));
-            index--;
+        for (ComplexSearchResponse.Result str : response.getResults()) {
+            assertThat(str.getTitle(), equalToIgnoringCase("$50,000 Burger"));
         }
     }
 
@@ -68,7 +64,7 @@ public class ComplexSearchTest extends AbstractTest {
     @Tag("Positive")
     @DisplayName("GET. Search by cooking time")
     void getSearchByCookingTimeTest() throws IOException {
-        JsonPath response = given()
+        ComplexSearchResponse response = given()
                 .spec(requestSpecification)
                 .queryParam("addRecipeInformation", true)
                 .queryParam("maxReadyTime", 5)
@@ -78,12 +74,10 @@ public class ComplexSearchTest extends AbstractTest {
                 .spec(responseSpecification)
                 .extract()
                 .body()
-                .jsonPath();
+                .as(ComplexSearchResponse.class);
 
-        int index = getMaxIndex(response);
-        while (index >= 0) {
-            assertThat(response.get("results[" + index + "].readyInMinutes"), lessThanOrEqualTo(5));
-            index--;
+        for (ComplexSearchResponse.Result str : response.getResults()) {
+            assertThat(str.getReadyInMinutes(), lessThanOrEqualTo(5));
         }
     }
 
@@ -105,7 +99,7 @@ public class ComplexSearchTest extends AbstractTest {
     @Tag("Positive")
     @DisplayName("GET. Search by minimum calories")
     void getSearchByMinimumCaloriesTest() throws IOException {
-        JsonPath response = given()
+        ComplexSearchResponse response = given()
                 .spec(requestSpecification)
                 .queryParam("sort", "calories")
                 .queryParam("sortDirection", "asc")
@@ -116,18 +110,20 @@ public class ComplexSearchTest extends AbstractTest {
                 .spec(responseSpecification)
                 .extract()
                 .body()
-                .jsonPath();
+                .as(ComplexSearchResponse.class);
 
-        int maxIndex = getMaxIndex(response);
         int i = 0;
-        while (i <= maxIndex) {
-            assertThat(response.get("results[" + i + "].nutrition.nutrients[0].name"), equalToIgnoringCase("Calories"));
-            if (i == 0) {
-                assertThat(response.get("results[" + i + "].nutrition.nutrients[0].amount"), greaterThanOrEqualTo(100f));
-            }
-            if (i != maxIndex) {
-            assertThat((Float) response.get("results[" + i + "].nutrition.nutrients[0].amount") <=
-                    (Float) response.get("results[" + (i + 1) + "].nutrition.nutrients[0].amount"), is (true));
+        float previousValue = 0f;
+        for (ComplexSearchResponse.Result res : response.getResults()) {
+            for (ComplexSearchResponse.Nutrient nutr : res.nutrition.getNutrients()) {
+                assertThat(nutr.getName(), equalToIgnoringCase("Calories"));
+                if (i == 0) {
+                    assertThat(nutr.getAmount(), greaterThanOrEqualTo(100f));
+                }
+                if (i != 0) {
+                    assertThat(nutr.getAmount() >= previousValue, is (true));//
+                }
+                previousValue = nutr.getAmount();
             }
             i++;
         }
@@ -137,29 +133,32 @@ public class ComplexSearchTest extends AbstractTest {
     @Tag("Positive")
     @DisplayName("GET. Search by maximum calories")
     void getSearchByMaximumCaloriesTest() throws IOException {
-        JsonPath response = given()
+        ComplexSearchResponse response = given()
                 .spec(requestSpecification)
                 .queryParam("sort", "calories")
                 .queryParam("sortDirection", "desc")
                 .queryParam("maxCalories", 800)
                 .when()
                 .get(getURL() + "/recipes/complexSearch")
+                .prettyPeek()
                 .then()
                 .spec(responseSpecification)
                 .extract()
                 .body()
-                .jsonPath();
+                .as(ComplexSearchResponse.class);
 
-        int maxIndex = getMaxIndex(response);
         int i = 0;
-        while (i <= maxIndex) {
-            assertThat(response.get("results[" + i + "].nutrition.nutrients[0].name"), equalToIgnoringCase("Calories"));
-            if (i == 0) {
-                assertThat(response.get("results[" + i + "].nutrition.nutrients[0].amount"), lessThanOrEqualTo(800f));
-            }
-            if (i != maxIndex) {
-                assertThat((Float) response.get("results[" + i + "].nutrition.nutrients[0].amount") >=
-                        (Float) response.get("results[" + (i + 1) + "].nutrition.nutrients[0].amount"), is (true));
+        float previousValue = 0f;
+        for (ComplexSearchResponse.Result res : response.getResults()) {
+            for (ComplexSearchResponse.Nutrient nutr : res.nutrition.getNutrients()) {
+                assertThat(nutr.getName(), equalToIgnoringCase("Calories"));
+                if (i == 0) {
+                    assertThat(nutr.getAmount(), lessThanOrEqualTo(800f));
+                }
+                if (i != 0) {
+                    assertThat(nutr.getAmount() <= previousValue, is (true));//
+                }
+                previousValue = nutr.getAmount();
             }
             i++;
         }

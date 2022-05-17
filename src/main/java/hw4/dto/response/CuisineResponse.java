@@ -1,9 +1,11 @@
-package hw4;
+package hw4.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * Backend Java. Homework 4
@@ -13,13 +15,17 @@ import lombok.Data;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "status",
-        "id"
-        })
+        "cuisine",
+        "cuisines",
+        "confidence"
+})
 @Data
-public class AddToShoppingListResponse {
-    @JsonProperty("status")
-    public String status;
-    @JsonProperty("id")
-    public Integer id;
+public class CuisineResponse {
+
+    @JsonProperty("cuisine")
+    private String cuisine;
+    @JsonProperty("cuisines")
+    private List<String> cuisines = null;
+    @JsonProperty("confidence")
+    private Double confidence;
 }

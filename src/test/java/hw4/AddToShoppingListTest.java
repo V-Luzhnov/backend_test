@@ -1,5 +1,7 @@
 package hw4;
 
+import hw4.dto.request.AddToShoppingListRequest;
+import hw4.dto.response.AddToShoppingListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -20,24 +22,25 @@ public class AddToShoppingListTest extends AbstractTest {
     @Tag("Positive")
     @DisplayName("POST. Add to Shopping List")
     void addToShoppingListTest() throws IOException {
-        String id = given()
+
+        AddToShoppingListRequest addToShoppingListRequest = new AddToShoppingListRequest();
+        addToShoppingListRequest.setItem("1 package baking powder");
+        addToShoppingListRequest.setAisle("Baking");
+        addToShoppingListRequest.setParse(true);
+
+        AddToShoppingListResponse response = given()
+                .spec(requestSpecification)
                 .queryParam("hash", getHash())
                 .queryParam("apiKey", getApiKey())
-                .body("{\n"
-                        + " \"item\": \"1 package baking powder\",\n"
-                        + " \"aisle\": \"Baking\",\n"
-                        + " \"parse\": true\n"
-                        + "}")
+                .body(addToShoppingListRequest)
                 .when()
                 .post(getURL() + "/mealplanner/" + getUserName() + "/shopping-list/items")
-//                .prettyPeek()
                 .then()
-                .statusCode(200)
+                .spec(responseSpecification)
                 .extract()
-                .jsonPath()
-                .get("id")
-                .toString();
+                .body()
+                .as(AddToShoppingListResponse.class);
 
-    tearDown(getURL() + "/mealplanner/" + getUserName() + "/shopping-list/items/" + id);
+        tearDown(getURL() + "/mealplanner/" + getUserName() + "/shopping-list/items/" + response.getId());
     }
 }

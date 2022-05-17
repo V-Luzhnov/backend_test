@@ -140,7 +140,6 @@ public class ComplexSearchTest extends AbstractTest {
                 .queryParam("maxCalories", 800)
                 .when()
                 .get(getURL() + "/recipes/complexSearch")
-                .prettyPeek()
                 .then()
                 .spec(responseSpecification)
                 .extract()

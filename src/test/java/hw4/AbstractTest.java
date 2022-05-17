@@ -4,7 +4,6 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.hamcrest.Matchers;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
 
@@ -54,10 +52,6 @@ public abstract class AbstractTest {
                 .build();
 
 //        RestAssured.requestSpecification = requestSpecification;
-    }
-
-    static Integer getMaxIndex(JsonPath response) {
-        return new ArrayList<>(response.get("results")).size() - 1;
     }
 
     public static String getURL() throws IOException {

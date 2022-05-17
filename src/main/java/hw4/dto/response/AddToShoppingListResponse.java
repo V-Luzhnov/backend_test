@@ -16,63 +16,37 @@ import java.util.List;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "aisles",
+        "id",
+        "name",
+        "measures",
+        "usages",
+        "usageRecipeIds",
+        "pantryItem",
+        "aisle",
         "cost",
-        "startDate",
-        "endDate"
+        "ingredientId"
 })
 @Data
 public class AddToShoppingListResponse {
 
-    @JsonProperty("aisles")
-    private List<Aisle> aisles = new ArrayList<Aisle>();
+    @JsonProperty("id")
+    private Integer id;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("measures")
+    private Measures measures;
+    @JsonProperty("usages")
+    private List<Object> usages = new ArrayList<>();
+    @JsonProperty("usageRecipeIds")
+    private List<Object> usageRecipeIds = new ArrayList<>();
+    @JsonProperty("pantryItem")
+    private Boolean pantryItem;
+    @JsonProperty("aisle")
+    private String aisle;
     @JsonProperty("cost")
     private Double cost;
-    @JsonProperty("startDate")
-    private Integer startDate;
-    @JsonProperty("endDate")
-    private Integer endDate;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonPropertyOrder({
-            "aisle",
-            "items"
-    })
-    @Data
-    private static class Aisle {
-        @JsonProperty("aisle")
-        private String aisle;
-        @JsonProperty("items")
-        private List<Item> items = new ArrayList<Item>();
-    }
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonPropertyOrder({
-            "id",
-            "name",
-            "measures",
-            "pantryItem",
-            "aisle",
-            "cost",
-            "ingredientId"
-    })
-    @Data
-    private static class Item {
-        @JsonProperty("id")
-        private Integer id;
-        @JsonProperty("name")
-        private String name;
-        @JsonProperty("measures")
-        private Measures measures;
-        @JsonProperty("pantryItem")
-        private Boolean pantryItem;
-        @JsonProperty("aisle")
-        private String aisle;
-        @JsonProperty("cost")
-        private Double cost;
-        @JsonProperty("ingredientId")
-        private Integer ingredientId;
-    }
+    @JsonProperty("ingredientId")
+    private Integer ingredientId;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonPropertyOrder({
@@ -81,7 +55,7 @@ public class AddToShoppingListResponse {
             "us"
     })
     @Data
-    private static class Measures {
+    public static class Measures {
         @JsonProperty("original")
         private Original original;
         @JsonProperty("metric")
@@ -96,7 +70,7 @@ public class AddToShoppingListResponse {
             "unit"
     })
     @Data
-    private static class Original {
+    public static class Metric {
         @JsonProperty("amount")
         private Double amount;
         @JsonProperty("unit")
@@ -109,7 +83,7 @@ public class AddToShoppingListResponse {
             "unit"
     })
     @Data
-    private static class Metric {
+    public static class Original {
         @JsonProperty("amount")
         private Double amount;
         @JsonProperty("unit")
@@ -122,7 +96,7 @@ public class AddToShoppingListResponse {
             "unit"
     })
     @Data
-    private static class Us {
+    public static class Us {
         @JsonProperty("amount")
         private Double amount;
         @JsonProperty("unit")

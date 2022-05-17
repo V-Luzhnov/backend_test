@@ -1,15 +1,12 @@
 package hw4.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Backend Java. Homework 4
@@ -28,15 +25,13 @@ import java.util.Map;
 public class ComplexSearchResponse {
 
     @JsonProperty("results")
-    private List<Result> results = new ArrayList<Result>();
+    private List<Result> results = new ArrayList<>();
     @JsonProperty("offset")
     private Integer offset;
     @JsonProperty("number")
     private Integer number;
     @JsonProperty("totalResults")
     private Integer totalResults;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonPropertyOrder({
@@ -137,15 +132,15 @@ public class ComplexSearchResponse {
         @JsonProperty("summary")
         private String summary;
         @JsonProperty("cuisines")
-        private List<String> cuisines = new ArrayList<String>();
+        private List<String> cuisines = new ArrayList<>();
         @JsonProperty("dishTypes")
-        private List<String> dishTypes = new ArrayList<String>();
+        private List<String> dishTypes = new ArrayList<>();
         @JsonProperty("diets")
-        private List<String> diets = new ArrayList<String>();
+        private List<String> diets = new ArrayList<>();
         @JsonProperty("occasions")
-        private List<Object> occasions = new ArrayList<Object>();
+        private List<Object> occasions = new ArrayList<>();
         @JsonProperty("analyzedInstructions")
-        private List<AnalyzedInstruction> analyzedInstructions = new ArrayList<AnalyzedInstruction>();
+        private List<AnalyzedInstruction> analyzedInstructions = new ArrayList<>();
         @JsonProperty("spoonacularSourceUrl")
         private String spoonacularSourceUrl;
     }
@@ -157,7 +152,7 @@ public class ComplexSearchResponse {
     @Data
     public static class Nutrition {
         @JsonProperty("nutrients")
-        private List<Nutrient> nutrients = new ArrayList<Nutrient>();
+        private List<Nutrient> nutrients = new ArrayList<>();
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -186,7 +181,7 @@ public class ComplexSearchResponse {
         @JsonProperty("name")
         private String name;
         @JsonProperty("steps")
-        private List<Step> steps = new ArrayList<Step>();
+        private List<Step> steps = new ArrayList<>();
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -203,9 +198,9 @@ public class ComplexSearchResponse {
         @JsonProperty("step")
         public String step;
         @JsonProperty("ingredients")
-        public List<Ingredient> ingredients = new ArrayList<Ingredient>();
+        public List<Ingredient> ingredients = new ArrayList<>();
         @JsonProperty("equipment")
-        public List<Equipment> equipment = new ArrayList<Equipment>();
+        public List<Equipment> equipment = new ArrayList<>();
         @JsonProperty("length")
         public Length length;
     }

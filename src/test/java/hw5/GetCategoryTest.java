@@ -32,12 +32,11 @@ public class GetCategoryTest {
         Response<GetCategoryResponse> response = categoryService.getCategory(1).execute();
 
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
+        assert response.body() != null;
         assertThat(response.body().getId(), equalTo(1));
         assertThat(response.body().getTitle(), equalTo("Food"));
         response.body().getProducts().forEach(product ->
                 assertThat(product.getCategoryTitle(), equalTo("Food")));
 
-
     }
-
 }

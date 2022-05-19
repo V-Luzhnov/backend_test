@@ -32,8 +32,7 @@ public class CreateProductTest {
 
     @BeforeAll
     static void beforeAll() {
-        productService = RetrofitUtils.getRetrofit()
-                .create(ProductService.class);
+        productService = RetrofitUtils.getRetrofit().create(ProductService.class);
     }
 
     @BeforeEach
@@ -46,8 +45,8 @@ public class CreateProductTest {
 
     @Test
     void createProductInFoodCategoryTest() throws IOException {
-        Response<Product> response = productService.createProduct(product)
-                .execute();
+        Response<Product> response = productService.createProduct(product).execute();
+        assert response.body() != null;
         id =  response.body().getId();
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
     }
@@ -58,7 +57,4 @@ public class CreateProductTest {
         Response<ResponseBody> response = productService.deleteProduct(id).execute();
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
     }
-
-
-
 }

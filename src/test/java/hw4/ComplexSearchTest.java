@@ -35,9 +35,11 @@ public class ComplexSearchTest extends AbstractTest {
                 .body()
                 .as(ComplexSearchResponse.class);
 
-        for (ComplexSearchResponse.Result str : response.getResults()) {
-            assertThat(str.getTitle(), containsString("Burger"));
-        }
+//        for (ComplexSearchResponse.Result str : response.getResults()) {
+//            assertThat(str.getTitle(), containsString("Burger"));
+//        }
+        response.getResults().forEach(product ->
+                assertThat(product.getTitle(), containsString("Burger")));
     }
 
     @Test
@@ -55,9 +57,11 @@ public class ComplexSearchTest extends AbstractTest {
                 .body()
                 .as(ComplexSearchResponse.class);
 
-        for (ComplexSearchResponse.Result str : response.getResults()) {
-            assertThat(str.getTitle(), equalToIgnoringCase("$50,000 Burger"));
-        }
+//        for (ComplexSearchResponse.Result str : response.getResults()) {
+//            assertThat(str.getTitle(), equalToIgnoringCase("$50,000 Burger"));
+//        }
+        response.getResults().forEach(product ->
+                assertThat(product.getTitle(), equalToIgnoringCase("$50,000 Burger")));
     }
 
     @Test
@@ -70,15 +74,18 @@ public class ComplexSearchTest extends AbstractTest {
                 .queryParam("maxReadyTime", 5)
                 .when()
                 .get(getURL() + "/recipes/complexSearch")
+//                .prettyPeek()
                 .then()
                 .spec(responseSpecification)
                 .extract()
                 .body()
                 .as(ComplexSearchResponse.class);
 
-        for (ComplexSearchResponse.Result str : response.getResults()) {
-            assertThat(str.getReadyInMinutes(), lessThanOrEqualTo(5));
-        }
+//        for (ComplexSearchResponse.Result str : response.getResults()) {
+//            assertThat(str.getReadyInMinutes(), lessThanOrEqualTo(5));
+//        }
+        response.getResults().forEach(product ->
+                assertThat(product.getReadyInMinutes(), lessThanOrEqualTo(5)));
     }
 
     @Test

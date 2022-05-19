@@ -58,6 +58,7 @@ public class ComplexSearchResponse {
             "readyInMinutes",
             "servings",
             "sourceUrl",
+            "openLicense",
             "image",
             "imageType",
             "nutrition",
@@ -123,6 +124,8 @@ public class ComplexSearchResponse {
         private Integer servings;
         @JsonProperty("sourceUrl")
         private String sourceUrl;
+        @JsonProperty("openLicense")
+        private String openLicense;
         @JsonProperty("image")
         private String image;
         @JsonProperty("imageType")

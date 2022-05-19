@@ -32,7 +32,7 @@ public class GetCategoryTest {
     @SneakyThrows
     @Test
     @Tag("Positive")
-    @DisplayName("GET. Getting all products of a category (Positive)")
+    @DisplayName("Get all products of a category (Positive)")
     void getCategoryByIdPositiveTest() {
         Response<GetCategoryResponse> response = categoryService.getCategory(1).execute();
 
@@ -40,9 +40,9 @@ public class GetCategoryTest {
         assertThat(response.code(), equalTo(200));
         assert response.body() != null;
         assertThat(response.body().getId(), equalTo(1));
-        assertThat(response.body().getTitle(), equalTo("Food"));
+        String category1 = response.body().getTitle();
         response.body().getProducts().forEach(product ->
-                assertThat(product.getCategoryTitle(), equalTo("Food")));
+                assertThat(product.getCategoryTitle(), equalTo(category1)));
 
         response = categoryService.getCategory(2).execute();
 
@@ -50,16 +50,16 @@ public class GetCategoryTest {
         assertThat(response.code(), equalTo(200));
         assert response.body() != null;
         assertThat(response.body().getId(), equalTo(2));
-        assertThat(response.body().getTitle(), equalTo("Electronic"));
+        String category2 = response.body().getTitle();
         response.body().getProducts().forEach(product ->
-                assertThat(product.getCategoryTitle(), equalTo("Electronic")));
+                assertThat(product.getCategoryTitle(), equalTo(category2)));
 
     }
 
     @SneakyThrows
     @Test
     @Tag("Negative")
-    @DisplayName("GET. Getting all products of a category (Negative)")
+    @DisplayName("Get all products of a category (Negative)")
     void getCategoryByIdNegativeTest() {
         Response<GetCategoryResponse> response = categoryService.getCategory(3).execute();
 

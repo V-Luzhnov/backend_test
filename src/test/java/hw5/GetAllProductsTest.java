@@ -33,7 +33,7 @@ public class GetAllProductsTest {
     @SneakyThrows
     @Test
     @Tag("Positive")
-    @DisplayName("GET. Get all products (Positive)")
+    @DisplayName("Get all products (Positive)")
     void getCategoryByIdPositiveTest() {
         Response<ResponseBody> response = productService.getProducts().execute();
 

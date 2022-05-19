@@ -29,7 +29,7 @@ public class GetProductByIdTest {
     @SneakyThrows
     @Test
     @Tag("Positive")
-    @DisplayName("GET. Get product by ID (Positive)")
+    @DisplayName("Get product by ID (Positive)")
     void getCategoryByIdPositiveTest() {
         Response<Product> response = productService.getProductById(1).execute();
 
@@ -55,7 +55,7 @@ public class GetProductByIdTest {
     @SneakyThrows
     @Test
     @Tag("Negative")
-    @DisplayName("GET. Getting a product by ID (Negative)")
+    @DisplayName("Getting a product by ID (Negative)")
     void getCategoryByIdNegativeTest() {
         Response<Product> response = productService.getProductById(6).execute();
 

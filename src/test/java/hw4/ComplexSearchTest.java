@@ -39,7 +39,7 @@ public class ComplexSearchTest extends AbstractTest {
 //            assertThat(str.getTitle(), containsString("Burger"));
 //        }
         response.getResults().forEach(product ->
-                assertThat(product.getTitle(), equalToIgnoringCase("Burger")));
+                assertThat(product.getTitle(), containsString("Burger")));
     }
 
     @Test

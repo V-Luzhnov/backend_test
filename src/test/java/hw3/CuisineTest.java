@@ -47,7 +47,7 @@ public class CuisineTest extends AbstractTest {
 
     @Test
     @Tag("Positive")
-    @DisplayName("POST. Classify Cuisine (Mediterranean)")
+    @DisplayName("POST. Classify Cuisine (Italian)")
     void postClassifyCuisineMediterraneanTest() throws IOException {
         JsonPath response = given()
                 .queryParam("apiKey", getApiKey())
@@ -63,9 +63,9 @@ public class CuisineTest extends AbstractTest {
                 .body()
                 .jsonPath();
 
-        assertThat(response.get(), hasEntry("cuisine", "Mediterranean"));
-        assertThat(response.get("cuisine"), equalToIgnoringCase("mediterranean"));
-        assertThat(response.get("cuisines"), hasItem("Mediterranean"));
+        assertThat(response.get(), hasEntry("cuisine", "Italian"));
+        assertThat(response.get("cuisine"), equalToIgnoringCase("italian"));
+        assertThat(response.get("cuisines"), hasItem("Italian"));
     }
 
     @Test

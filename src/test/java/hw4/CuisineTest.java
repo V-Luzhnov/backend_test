@@ -58,9 +58,9 @@ public class CuisineTest extends AbstractTest {
                 .body()
                 .as(CuisineResponse.class);
 
-        assertThat(response.getCuisine(), containsString("Mediterranean"));
-        assertThat(response.getCuisine(), equalToIgnoringCase("mediterranean"));
-        assertThat(response.getCuisines(), hasItem("Mediterranean"));
+        assertThat(response.getCuisine(), containsString("Italian"));
+        assertThat(response.getCuisine(), equalToIgnoringCase("Italian"));
+        assertThat(response.getCuisines(), hasItem("Italian"));
     }
 
     @Test

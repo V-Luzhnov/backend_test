@@ -55,9 +55,9 @@ public class GetProductByIdTest {
     @SneakyThrows
     @Test
     @Tag("Negative")
-    @DisplayName("Getting a product by ID (Negative)")
+    @DisplayName("Get product by ID (Negative)")
     void getCategoryByIdNegativeTest() {
-        Response<Product> response = productService.getProductById(6).execute();
+        Response<Product> response = productService.getProductById(0).execute();
 
         assertThat(response.isSuccessful(), CoreMatchers.is(false));
         assertThat(response.code(), equalTo(404));

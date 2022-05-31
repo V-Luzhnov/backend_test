@@ -1,4 +1,4 @@
-package hw5;
+package hw6;
 
 import com.github.javafaker.Faker;
 import hw5.api.ProductService;
@@ -7,11 +7,13 @@ import hw5.utils.RetrofitUtils;
 import lombok.SneakyThrows;
 import okhttp3.ResponseBody;
 import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

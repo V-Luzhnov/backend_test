@@ -32,19 +32,24 @@ public class ExampleMain {
             List<db.model.Categories> list = categoriesMapper.selectByExample(example);
             System.out.println(categoriesMapper.countByExample(example));
 
+            //создаем
             db.model.Categories categories = new db.model.Categories();
             categories.setTitle("test");
             categoriesMapper.insert(categories);
             session.commit();
 
+            //находим
             db.model.CategoriesExample example2 = new db.model.CategoriesExample();
             example2.createCriteria().andTitleLike("test");
             List<db.model.Categories> list2 = categoriesMapper.selectByExample(example2);
             db.model.Categories categories2 = list2.get(0);
-            categories2.setTitle("test100");
+
+            //меняем
+            categories2.setTitle("test_new");
             categoriesMapper.updateByPrimaryKey(categories2);
             session.commit();
 
+            //удаляем
             categoriesMapper.deleteByPrimaryKey(categories2.getId());
             session.commit();
 

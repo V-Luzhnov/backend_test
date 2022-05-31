@@ -8,6 +8,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Backend Java. Homework 6
+ *
+ * @author Vitalii Luzhnov
+ * @version 31.05.2022
+ */
 public class ExampleTestMain {
     public static void main(String[] args) throws IOException {
         String resource = "mybatis-config.xml";

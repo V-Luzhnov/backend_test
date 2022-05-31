@@ -9,7 +9,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-
+/**
+ * Backend Java. Homework 6
+ *
+ * @author Vitalii Luzhnov
+ * @version 31.05.2022
+ */
 public class ExampleMain {
 
     public static void main( String[] args ) throws IOException {

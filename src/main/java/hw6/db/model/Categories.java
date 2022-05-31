@@ -1,5 +1,11 @@
 package db.model;
 
+/**
+ * Backend Java. Homework 6
+ *
+ * @author Vitalii Luzhnov
+ * @version 31.05.2022
+ */
 public class Categories {
     /**
      *

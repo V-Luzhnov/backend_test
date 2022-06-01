@@ -1,9 +1,9 @@
 package hw6;
 
 import com.github.javafaker.Faker;
-import hw5.api.ProductService;
-import hw5.dto.Product;
-import hw5.utils.RetrofitUtils;
+import hw6.api.ProductService;
+import hw6.dto.Product;
+import hw6.utils.RetrofitUtils;
 import lombok.SneakyThrows;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;

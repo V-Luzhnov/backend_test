@@ -1,8 +1,8 @@
-package hw5;
+package hw6;
 
-import hw5.api.CategoryService;
-import hw5.dto.GetCategoryResponse;
-import hw5.utils.RetrofitUtils;
+import hw6.api.ProductService;
+import hw6.dto.Product;
+import hw6.utils.RetrofitUtils;
 import lombok.SneakyThrows;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,47 +20,47 @@ import static org.hamcrest.Matchers.equalTo;
  * @author Vitalii Luzhnov
  * @version 19.05.2022
  */
-public class GetCategoryTest {
+public class GetProductByIdTest {
 
-    static CategoryService categoryService;
+    static ProductService productService;
 
     @BeforeAll
     static void beforeAll() {
-        categoryService = RetrofitUtils.getRetrofit().create(CategoryService.class);
+        productService = RetrofitUtils.getRetrofit().create(ProductService.class);
     }
 
     @SneakyThrows
     @Test
     @Tag("Positive")
-    @DisplayName("Get all products of a category (Positive)")
+    @DisplayName("Get product by ID (Positive)")
     void getCategoryByIdPositiveTest() {
-        Response<GetCategoryResponse> response = categoryService.getCategory(1).execute();
+        Response<Product> response = productService.getProductById(1).execute();
 
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
         assertThat(response.code(), equalTo(200));
         assert response.body() != null;
         assertThat(response.body().getId(), equalTo(1));
-        String category1 = response.body().getTitle();
-        response.body().getProducts().forEach(product ->
-                assertThat(product.getCategoryTitle(), equalTo(category1)));
+        assertThat(response.body().getTitle(), equalTo("Milk"));
+        assertThat(response.body().getPrice(), equalTo(95));
+        assertThat(response.body().getCategoryTitle(), equalTo("Food"));
 
-        response = categoryService.getCategory(2).execute();
+        response = productService.getProductById(5).execute();
 
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
         assertThat(response.code(), equalTo(200));
         assert response.body() != null;
-        assertThat(response.body().getId(), equalTo(2));
-        String category2 = response.body().getTitle();
-        response.body().getProducts().forEach(product ->
-                assertThat(product.getCategoryTitle(), equalTo(category2)));
+        assertThat(response.body().getId(), equalTo(5));
+        assertThat(response.body().getTitle(), equalTo("LG TV 1"));
+        assertThat(response.body().getPrice(), equalTo(50000));
+        assertThat(response.body().getCategoryTitle(), equalTo("Electronic"));
     }
 
     @SneakyThrows
     @Test
     @Tag("Negative")
-    @DisplayName("Get all products of a category (Negative)")
+    @DisplayName("Get product by ID (Negative)")
     void getCategoryByIdNegativeTest() {
-        Response<GetCategoryResponse> response = categoryService.getCategory(3).execute();
+        Response<Product> response = productService.getProductById(0).execute();
 
         assertThat(response.isSuccessful(), CoreMatchers.is(false));
         assertThat(response.code(), equalTo(404));

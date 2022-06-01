@@ -46,7 +46,7 @@ public class CreateProductTest {
     @Test
     @Tag("Positive")
     @DisplayName("Product creation (Positive)")
-    void createProductTest() throws IOException {
+    void createProductPositiveTest() throws IOException {
         category = "Food";
         setUp();
         Response<Product> response = productService.createProduct(product).execute();
@@ -68,7 +68,7 @@ public class CreateProductTest {
         assertThat(response.body().getCategoryTitle(), equalTo(category));
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
 
-        id =  response.body().getId();
+        id = response.body().getId();
         tearDown();
     }
 

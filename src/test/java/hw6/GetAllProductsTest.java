@@ -1,7 +1,7 @@
 package hw6;
 
-import hw5.api.ProductService;
-import hw5.utils.RetrofitUtils;
+import hw6.api.ProductService;
+import hw6.utils.RetrofitUtils;
 import lombok.SneakyThrows;
 import okhttp3.ResponseBody;
 import org.hamcrest.CoreMatchers;

@@ -1,8 +1,8 @@
 package hw6;
 
-import hw5.api.CategoryService;
-import hw5.dto.GetCategoryResponse;
-import hw5.utils.RetrofitUtils;
+import hw6.api.CategoryService;
+import hw6.dto.GetCategoryResponse;
+import hw6.utils.RetrofitUtils;
 import lombok.SneakyThrows;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeAll;
@@ -53,7 +53,6 @@ public class GetCategoryTest {
         String category2 = response.body().getTitle();
         response.body().getProducts().forEach(product ->
                 assertThat(product.getCategoryTitle(), equalTo(category2)));
-
     }
 
     @SneakyThrows

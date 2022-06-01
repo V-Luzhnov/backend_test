@@ -25,12 +25,12 @@ public class ExampleTestMain {
         db.dao.CategoriesMapper categoriesMapper = sqlSession.getMapper(db.dao.CategoriesMapper.class);
         db.model.CategoriesExample categoriesExample = new db.model.CategoriesExample();
 
-        categoriesExample.createCriteria().andIdEqualTo(1);
+        categoriesExample.createCriteria().andIdEqualTo(1L);
 
 //        List<Categories> list = categoriesMapper.selectByExample(categoriesExample);
 //        System.out.println(categoriesMapper.countByExample(categoriesExample));
 
-        db.model.Categories selected = categoriesMapper.selectByPrimaryKey(2);
+        db.model.Categories selected = categoriesMapper.selectByPrimaryKey(2L);
         System.out.println("ID: " + selected.getId() + "\ntitle: " + selected.getTitle());
 
         db.model.Categories categories = new db.model.Categories();

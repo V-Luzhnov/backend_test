@@ -53,7 +53,6 @@ public class GetCategoryTest {
         String category2 = response.body().getTitle();
         response.body().getProducts().forEach(product ->
                 assertThat(product.getCategoryTitle(), equalTo(category2)));
-
     }
 
     @SneakyThrows

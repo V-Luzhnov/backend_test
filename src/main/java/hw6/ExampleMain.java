@@ -28,7 +28,7 @@ public class ExampleMain {
             db.dao.CategoriesMapper categoriesMapper = session.getMapper(db.dao.CategoriesMapper.class);
             db.model.CategoriesExample example = new db.model.CategoriesExample();
 
-            example.createCriteria().andIdEqualTo(1);
+            example.createCriteria().andIdEqualTo(1L);
             List<db.model.Categories> list = categoriesMapper.selectByExample(example);
             System.out.println(categoriesMapper.countByExample(example));
 

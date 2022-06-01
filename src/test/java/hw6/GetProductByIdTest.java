@@ -1,8 +1,8 @@
 package hw6;
 
-import hw5.api.ProductService;
-import hw5.dto.Product;
-import hw5.utils.RetrofitUtils;
+import hw6.api.ProductService;
+import hw6.dto.Product;
+import hw6.utils.RetrofitUtils;
 import lombok.SneakyThrows;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeAll;
